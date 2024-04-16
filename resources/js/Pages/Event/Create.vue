@@ -2,14 +2,14 @@
 import { Button } from "@/Components/ui/button";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { router } from "@inertiajs/vue3";
-import { defineProps, reactive } from "vue";
+import { reactive } from "vue";
 import EventBread from "../../Components/EventBread.vue";
 // import FlashMessage from "../../Components/FlashMessage.vue";
 // import ValidationErrors from "../../Components/ValidationErrors.vue";
 
-defineProps({
-    errors: Object,
-});
+// defineProps({
+//     errors: Object,
+// });
 
 const event = reactive({
     title: null,

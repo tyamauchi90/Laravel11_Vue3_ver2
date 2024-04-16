@@ -1,4 +1,5 @@
 <script setup>
+import FlashMessage from "@/Components/FlashMessage.vue";
 import Pagination from "@/Components/Pagination.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 
@@ -6,11 +7,10 @@ const { events, links } = defineProps({
     events: Object,
     links: Object,
 });
-
-console.log();
 </script>
 
 <template>
+    <FlashMessage />
     <AuthenticatedLayout>
         <div class="space-y-4 w-11/12 mx-auto">
             <h1 class="my-3">管理者ページ</h1>

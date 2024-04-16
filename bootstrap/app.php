@@ -16,6 +16,9 @@ return Application::configure(basePath: dirname(__DIR__))
       \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
       // \App\Http\Middleware\CheckUserRole::class,
     ]);
+    $middleware->alias([
+      'admin_master_access' => \App\Http\Middleware\AdminAccessMiddleware::class,
+    ]);
 
     //
   })

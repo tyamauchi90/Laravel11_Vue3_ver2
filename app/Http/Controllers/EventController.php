@@ -43,16 +43,16 @@ class EventController extends Controller
       'title' => 'required|max:255',
       'content' => 'required',
       'event_date' => 'required|date',
-      'user_id' => 'required',
-      'user_name' => 'required',
     ]);
+    $validatedData['user_id'] = auth()->id(); // 認証されたユーザーのIDを追加
 
     $event = new Event($validatedData);
-    $event->user_id = auth()->id();
-    $event->user_name = auth()->name;
     $event->save();
 
-    return redirect()->route('event.create');
+    return redirect()->route('event.index')->with([
+      'message' => 'イベントを登録しました',
+      'status' => 'success'
+    ]);
   }
 
 
@@ -100,6 +100,9 @@ class EventController extends Controller
   public function destroy(Event $event)
   {
     $event->delete();
-    return redirect()->route('event.index')->with('message', 'イベントを削除しました');
+    return redirect()->route('event.index')->with([
+      'message' => 'イベントを削除しました',
+      'status' => 'danger',
+    ]);
   }
 }
