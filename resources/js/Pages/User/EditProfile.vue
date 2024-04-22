@@ -1,17 +1,20 @@
 <script setup>
 import Button from "@/Components/ui/button/Button.vue";
+// import { useMaster } from "@/Hooks/useMaster";
 import { router, usePage } from "@inertiajs/vue3";
 import { reactive } from "vue";
-const user = usePage().props.auth.user;
+
+const { auth } = usePage().props;
+// const { isMaster } = useMaster(auth);
 
 const form = reactive({
-    kana: user.kana,
-    role: user.role,
-    birthday: user.birthday,
+    kana: auth.user.kana,
+    role: auth.user.role,
+    birthday: auth.user.birthday,
 });
 
 const editProfile = () => {
-    router.visit(`/user/${user.id}`, {
+    router.visit(`/user/${auth.user.id}`, {
         method: "put",
         data: form,
     });
@@ -28,6 +31,7 @@ const editProfile = () => {
                 </label>
             </div>
             <div>
+                <!-- <div v-if="isMaster"> -->
                 <label for="role"
                     >ステータス：
                     <select id="role" v-model="form.role">
@@ -43,11 +47,7 @@ const editProfile = () => {
                     <input id="birthday" v-model="form.birthday" type="date" />
                 </label>
             </div>
-            <Button
-                class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-            >
-                更新
-            </Button>
+            <Button> 更新 </Button>
         </form>
     </div>
 </template>

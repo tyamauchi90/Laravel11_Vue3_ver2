@@ -4,10 +4,14 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
-import { Link } from "@inertiajs/vue3";
+import { useAdminOrMaster } from "@/Hooks/useAdminOrMaster";
+import { Link, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 
 const showingNavigationDropdown = ref(false);
+
+const { auth } = usePage().props;
+const { isAdminOrMaster } = useAdminOrMaster(auth.user.role);
 </script>
 
 <template>
@@ -44,6 +48,7 @@ const showingNavigationDropdown = ref(false);
                                     イベント
                                 </NavLink>
                                 <NavLink
+                                    v-if="isAdminOrMaster"
                                     :href="route('admin.index')"
                                     :active="route().current('admin')"
                                 >
@@ -163,6 +168,7 @@ const showingNavigationDropdown = ref(false);
                             イベント
                         </ResponsiveNavLink>
                         <ResponsiveNavLink
+                            v-if="isAdminOrMaster"
                             :href="route('admin.index')"
                             :active="route().current('admin')"
                         >

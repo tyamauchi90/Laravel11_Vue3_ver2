@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -9,7 +10,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-// Route::resource('event', EventController::class)->middleware(['auth']);
+Route::post('/contact', [ContactController::class, 'store']);
+
 Route::middleware(['auth', 'admin_master_access'])->group(function () {
   Route::get('/event/create', [EventController::class, 'create'])->name('event.create');
   Route::post('/event', [EventController::class, 'store'])->name('event.store');

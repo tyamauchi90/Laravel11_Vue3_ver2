@@ -50,9 +50,12 @@ class ApplicationController extends Controller
 
     $validatedData['user_id'] = auth()->id();
 
-    $application = Application::create($validatedData);
+    Application::create($validatedData);
 
-    return redirect()->route('event.index');
+    return redirect()->route('event.index')->with([
+      'message' => '申込み完了しました',
+      'status' => 'success'
+    ]);
   }
 
   /**
@@ -85,6 +88,9 @@ class ApplicationController extends Controller
   public function destroy(Application $application)
   {
     $application->delete();
-    return redirect()->route('event.index')->with('message', '申込みをキャンセルしました');
+    return redirect()->route('event.index')->with([
+      'message' => '申込みをキャンセルしました',
+      'status' => 'danger'
+    ]);
   }
 }

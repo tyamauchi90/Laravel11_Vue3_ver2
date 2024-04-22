@@ -7,6 +7,7 @@ const { events, links } = defineProps({
     events: Object,
     links: Object,
 });
+
 </script>
 
 <template>
