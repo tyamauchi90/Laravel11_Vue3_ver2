@@ -4,11 +4,32 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminAccessMiddleware;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+
+
+Route::middleware(['auth'])->group(function () {
+  // 決済
+  Route::get('/purchase', [PurchaseController::class, 'index']);
+  Route::post('/process-payment', [PurchaseController::class, 'processPayment']);
+
+  // サブスクリプション
+  Route::get('/subscription', [SubscriptionController::class, 'index']);
+  Route::post('/user/subscribe', function (Request $request) {
+    $user = $request->user();
+    $subscription = $user->newSubscription('default', 'price_1P8EZXCq7haun9AiRBDr1sM8')
+      ->create($request->paymentMethodId);
+    return to_route('dashboard');
+  });
+});
+
 
 Route::post('/contact', [ContactController::class, 'store']);
 
@@ -25,7 +46,6 @@ Route::get('/event/{event}/show', [EventController::class, 'show'])->name('event
 Route::resource('application', ApplicationController::class)->middleware(['auth']);
 
 Route::middleware(['admin_master_access'])->group(function () {
-  // adminとmasterのみアクセス可能なルートを定義
   Route::resource('admin', ApplicationController::class);
 });
 

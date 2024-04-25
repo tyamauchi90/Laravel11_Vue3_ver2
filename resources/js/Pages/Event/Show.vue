@@ -1,4 +1,6 @@
 <script setup>
+import ApplyEvent from "@/Components/ApplyEvent.vue";
+import ApplyForm from "@/Components/ApplyForm.vue";
 import EventBread from "@/Components/EventBread.vue";
 import { Button } from "@/Components/ui/button";
 import { useAdminOrMaster } from "@/Hooks/useAdminOrMaster.js";
@@ -35,23 +37,6 @@ const currentUserApplicationId = computed(() => {
 
 const toggleReservationForm = () => {
     isFormVisible.value = !isFormVisible.value;
-};
-
-const applyEvent = () => {
-    try {
-        router.post(`/application/`, {
-            user_id: auth.user.id,
-            event_id: event.id,
-            apply_date: new Date().toISOString().split("T")[0],
-            is_paid: form.is_paid,
-        });
-        form.name = "";
-        form.email = "";
-        form.is_paid = "";
-    } catch (e) {
-        console.error(e);
-        alert("申込みに失敗しました。");
-    }
 };
 
 const cancelEvent = (currentUserApplicationId) => {
@@ -116,7 +101,7 @@ const deleteEvent = (id) => {
                     class="bg-slate-800 bg-opacity-80 z-10 w-screen h-screen fixed inset-0 p-8"
                 >
                     <div
-                        class="bg-slate-100 z-50 absolute inset-4 max-w-[500px] mx-auto p-8"
+                        class="bg-slate-100 z-50 absolute inset-4 max-w-[800px] mx-auto p-8 overflow-y-scroll"
                     >
                         <h1 class="text-lg font-semibold mb-4">
                             申込みフォーム
@@ -124,65 +109,38 @@ const deleteEvent = (id) => {
                         <h2 class="text-lg font-semibold mb-4">
                             イベント日：{{ event.event_date }}
                         </h2>
-                        <form @submit.prevent="applyEvent" class="space-y-4">
-                            <div class="form-group">
-                                <label for="name">お名前</label><br />
-                                <input
-                                    class="w-full"
-                                    v-model="form.name"
-                                    type="text"
-                                    placeholder="タイトル"
-                                    required
-                                    maxlength="255"
-                                />
-                            </div>
 
-                            <div class="form-group">
-                                <label for="email">メールアドレス</label><br />
-                                <input
-                                    class="w-full"
-                                    v-model="form.email"
-                                    type="email"
-                                    placeholder="メールアドレス"
-                                    required
-                                />
+                        <div class="form-group mb-4">
+                            <label for="is_paid">申込み方法</label><br />
+                            <select v-model="form.is_paid" required>
+                                <option value="default" selected disabled>
+                                    選択する
+                                </option>
+                                <option value="1">事前決済</option>
+                                <option value="0">当日支払い</option>
+                            </select>
+                            <div
+                                class="text-red-300"
+                                v-if="form.is_paid === 'default'"
+                            >
+                                ※申込み方法を選択してください
                             </div>
+                        </div>
 
-                            <div class="form-group">
-                                <label for="is_paid">申込み方法</label><br />
-                                <select v-model="form.is_paid" required>
-                                    <option value="default" selected disabled>
-                                        選択する
-                                    </option>
-                                    <option value="1">事前決済</option>
-                                    <option value="0">当日支払い</option>
-                                </select>
+                        <div class="transition duration-1000 ease-in-out">
+                            <div v-if="form.is_paid === '1'">
+                                <ApplyForm :auth="auth" :event="event" />
                             </div>
-
-                            <div class="transition duration-1000 ease-in-out">
-                                <div
-                                    class="text-red-300"
-                                    v-if="form.is_paid === 'default'"
-                                >
-                                    ※申込み方法を選択してください
-                                </div>
-                                <Button
-                                    v-if="form.is_paid === '1'"
-                                    class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
-                                    type="submit"
-                                    >予約する（事前決済）</Button
-                                >
-                                <Button
-                                    v-if="form.is_paid === '0'"
-                                    class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
-                                    type="submit"
-                                    >予約する（当日支払い）</Button
-                                >
+                            <div v-if="form.is_paid === '0'">
+                                <ApplyEvent :auth="auth" :event="event" />
                             </div>
-                        </form>
-                        <Button class="my-4" @click="toggleReservationForm()">
-                            キャンセル
-                        </Button>
+                            <Button
+                                class="my-4"
+                                @click="toggleReservationForm()"
+                            >
+                                戻る
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </div>
