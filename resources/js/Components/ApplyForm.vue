@@ -52,9 +52,11 @@ const stripeSubmit = async () => {
 <template>
     <form @submit.prevent="stripeSubmit()" class="space-y-4">
         <div class="form-group">
-            <label for="name">お名前</label><br />
+            <label for="name" class="block text-sm font-medium text-gray-700"
+                >お名前</label
+            >
             <input
-                class="w-full"
+                class="mt-1 p-2 block w-full h-11 text-md rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 v-model="form.name"
                 type="text"
                 placeholder="タイトル"
@@ -64,9 +66,11 @@ const stripeSubmit = async () => {
         </div>
 
         <div class="form-group">
-            <label for="email">メールアドレス</label><br />
+            <label for="email" class="block text-sm font-medium text-gray-700"
+                >メールアドレス</label
+            >
             <input
-                class="w-full"
+                class="mt-1 p-2 block w-full h-11 text-md rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 v-model="form.email"
                 type="email"
                 placeholder="メールアドレス"
@@ -75,31 +79,27 @@ const stripeSubmit = async () => {
         </div>
         <div class="transition duration-1000 ease-in-out">
             <div>
+                <label
+                    for="card-holder-name"
+                    class="block text-sm font-medium text-gray-700"
+                    >カード情報</label
+                >
                 <input
                     v-model="form.cardHolderName"
                     id="card-holder-name"
                     type="text"
                     placeholder="カード名義人"
+                    class="mt-1 p-2 block w-full h-11 text-md rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 />
-                <div id="card-element"></div>
+                <div
+                    id="card-element"
+                    class="mt-1 p-2 flex flex-col justify-center h-11 text-md rounded-sm border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+                ></div>
                 <Button
-                    class="text-white bg-green-500 border-0 py-2 px-8 focus:outline-none hover:bg-green-600 rounded text-lg"
+                    class="mt-4 inline-flex justify-center rounded-md border border-transparent bg-green-500 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
                     >予約する（事前決済）</Button
                 >
             </div>
         </div>
     </form>
 </template>
-
-<style>
-#card-element,
-#card-holder-name {
-    font-size: 14px;
-    border-radius: 4px 4px 0 0;
-    padding: 12px;
-    border: 1px solid rgba(50, 50, 93, 0.1);
-    height: 44px;
-    width: 100%;
-    background: white;
-}
-</style>

@@ -112,7 +112,11 @@ const deleteEvent = (id) => {
 
                         <div class="form-group mb-4">
                             <label for="is_paid">申込み方法</label><br />
-                            <select v-model="form.is_paid" required>
+                            <select
+                                v-model="form.is_paid"
+                                required
+                                class="h-11 p-2"
+                            >
                                 <option value="default" selected disabled>
                                     選択する
                                 </option>

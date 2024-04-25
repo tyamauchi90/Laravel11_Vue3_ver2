@@ -32,9 +32,11 @@ const applyEvent = () => {
 <template>
     <form @submit.prevent="applyEvent()" class="space-y-4">
         <div class="form-group">
-            <label for="name">お名前</label><br />
+            <label for="name" class="block text-sm font-medium text-gray-700"
+                >お名前</label
+            >
             <input
-                class="w-full"
+                class="mt-1 p-2 block w-full h-11 text-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 v-model="form.name"
                 type="text"
                 placeholder="タイトル"
@@ -44,9 +46,11 @@ const applyEvent = () => {
         </div>
 
         <div class="form-group">
-            <label for="email">メールアドレス</label><br />
+            <label for="email" class="block text-sm font-medium text-gray-700"
+                >メールアドレス</label
+            >
             <input
-                class="w-full"
+                class="mt-1 p-2 block w-full h-11 text-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
                 v-model="form.email"
                 type="email"
                 placeholder="メールアドレス"
@@ -54,7 +58,7 @@ const applyEvent = () => {
             />
         </div>
         <Button
-            class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"
+            class="text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded"
             type="submit"
             >予約する（当日支払い）</Button
         >

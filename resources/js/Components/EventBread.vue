@@ -13,7 +13,7 @@ const { isAdminOrMaster } = useAdminOrMaster(auth.user.role);
 </script>
 
 <template>
-    <Breadcrumb class="mt-8">
+    <Breadcrumb class="mt-8 max-w-7xl mx-auto">
         <BreadcrumbList>
             <BreadcrumbItem>
                 <Link href="/event"> イベント一覧 </Link>

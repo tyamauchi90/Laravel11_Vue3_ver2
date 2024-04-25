@@ -7,13 +7,12 @@ const { events, links } = defineProps({
     events: Object,
     links: Object,
 });
-
 </script>
 
 <template>
     <FlashMessage />
     <AuthenticatedLayout>
-        <div class="space-y-4 w-11/12 mx-auto">
+        <div class="space-y-4 max-w-7xl mx-auto">
             <h1 class="my-3">管理者ページ</h1>
             <hr class="my-8" />
             <h2>申込者一覧</h2>

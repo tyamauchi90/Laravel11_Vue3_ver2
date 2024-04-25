@@ -15,7 +15,7 @@ const props = defineProps({
     <AuthenticatedLayout>
         <EventBread />
         <FlashMessage />
-        <div class="space-y-4 w-11/12 mx-auto">
+        <div class="space-y-4 max-w-7xl mx-auto">
             <h1 class="my-3">Events</h1>
             <ul v-for="event in events.data" :key="event.id" class="space-y-4">
                 <li class="m-4">
